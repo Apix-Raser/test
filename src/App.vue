@@ -1,17 +1,46 @@
 <template>
+
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <notifications group="foo" />
+    <div v-if="!seeScan">
+      <img alt="Vue logo" src="./assets/logo.png">
+      <p>Welcome to blockCovid</p>
+      <button  class="btn btn-info" v-on:click="setSeeScan()">Scan</button>
+      <button  class="btn btn-info" v-on:click="sendNotification()">notify</button>
+    </div>
+    
+    <Scan v-if="seeScan" msg="Welcome to Your scan"/> 
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Scan from './components/Scan.vue'
 
 export default {
   name: 'App',
+
+  data () {
+    return {
+      seeScan: false
+    }
+  },
+  methods:{
+    sendNotification: function (){
+      console.log("ok")
+      this.$notify({
+        group: 'foo',
+        title: 'Important message',
+        text: 'Hello user! This is a notification!'
+      });
+    },
+    setSeeScan: function () {
+      this.seeScan = true
+    }
+
+  },
   components: {
-    HelloWorld
+    Scan
   }
 }
 </script>
